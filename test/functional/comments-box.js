@@ -14,7 +14,7 @@ describe('User visits home page', () => {
   it('should see the home page', () => {
     browser.assert.text('title', 'Agile Box');
   });
-
+/*
   describe('posts comment', () => {
     before((done) => {
       browser
@@ -27,4 +27,5 @@ describe('User visits home page', () => {
       browser.assert.text('.comment', 'Hey, yo!');
     });
   });
+*/
 });
