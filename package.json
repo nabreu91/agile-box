@@ -4,9 +4,9 @@
   "description": "Continuous Integration and Continuous Delivery demo for the Agile Methodologies course.",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "express": "^4.13.3",
-    "hapi": "^11.0.2",
-    "inert": "^3.2.0",
+    "node-uuid": "^1.4.3",
     "zombie": "^4.2.1"
   },
   "devDependencies": {
