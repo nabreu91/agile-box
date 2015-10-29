@@ -1,1 +1,101 @@
-<h2>Hello, world!</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Agile Box</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="content">
+      <div class="commentBox">
+        <h1>Agile Box</h1>
+        <div class="commentList">
+        </div>
+        <form class="commentForm">
+          <input type="text" name="author" placeholder="Your name" />
+          <input type="text" name="body" placeholder="Say something..." />
+          <input type="submit" value="Post" />
+        </form>
+      </div>
+    </div>
+    <script type="text/babel">
+      const renderComments = (comments) => {
+        // Clear comment list
+        $('.commentList').html('');
+
+        // Render comments
+        comments.forEach(renderComment);
+      };
+
+      const renderComment = (comment) => {
+        const commentList = $('.commentList');
+
+        const commentElement = $(`
+          <div class="comment">
+            <h2 class="commentAuthor">
+              ${comment.author}
+            </h2>
+            ${comment.body}
+          </div>
+        `);
+
+        commentElement.appendTo(commentList);
+      };
+
+      const loadCommentsFromServer = () => {
+        $.ajax({
+          url: '/api/comments',
+          dataType: 'json',
+          cache: false,
+          success: (comments) => {
+            console.log(comments);
+            renderComments(comments);
+          },
+          error: (xhr, status, err) => {
+            console.error('/api/comments', status, err.toString());
+          }
+        });
+      };
+
+      const postComment = (comment) => {
+        $.ajax({
+          url: '/api/comments',
+          dataType: 'json',
+          type: 'POST',
+          data: comment,
+          success: (data) => {
+            // Optimistic update
+            renderComment(comment);
+          },
+          error: (xhr, status, err) => {
+            console.error('/api/comments', status, err.toString());
+          }
+        });
+      };
+
+      $('.commentForm').submit((e) => {
+        e.preventDefault();
+
+        const author = $('input[name="author"]').val().trim();
+        const body = $('input[name="body"]').val().trim();
+        if (!author || !body) {
+          return;
+        }
+
+        postComment({ author, body });
+
+        $('#author').val('');
+        $('#body').val('');
+        return;
+      });
+
+      $(() => {
+        loadCommentsFromServer();
+
+        const POLL_INTERVAL = 2000;
+        setInterval(loadCommentsFromServer, POLL_INTERVAL);
+      });
+    </script>
+  </body>
+</html>
