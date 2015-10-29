@@ -1,0 +1,29 @@
+{
+  "name": "agile-box",
+  "version": "0.0.1",
+  "description": "Continuous Integration and Continuous Delivery demo for the Agile Methodologies course.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "hapi": "^11.0.2",
+    "inert": "^3.2.0",
+    "zombie": "^4.2.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3",
+    "zombie": "^4.2.1"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olistic/agile-box.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/olistic/agile-box/issues"
+  },
+  "homepage": "https://github.com/olistic/agile-box#readme"
+}
